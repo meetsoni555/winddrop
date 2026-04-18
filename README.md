@@ -53,7 +53,7 @@ winddrop send file.zip --public
 ### ⏳ Share with expiry
 
 ```bash
-winddrop send file.zip --expire 5m
+winddrop send file.zip --expire 5m (locally)
 ```
 
 ---
@@ -61,7 +61,7 @@ winddrop send file.zip --expire 5m
 ### 🔥 One-time download
 
 ```bash
-winddrop send file.zip --once
+winddrop send file.zip --once     (locally)
 ```
 
 ---
@@ -69,7 +69,7 @@ winddrop send file.zip --once
 ### 💀 Combined
 
 ```bash
-winddrop send file.zip --public --once --expire 2m
+winddrop send file.zip --public --once --expire 2m  (underdevelopment)
 ```
 
 ---
