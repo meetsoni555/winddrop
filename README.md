@@ -4,6 +4,10 @@
 
 ---
 
+<img width="1546" height="470" alt="cover" src="https://github.com/user-attachments/assets/a8241864-d61a-4950-9d68-e9828bcdfcd8" />
+
+
+
 ## ⚡ What is WindDrop?
 
 WindDrop is a lightweight CLI tool to share files instantly.
