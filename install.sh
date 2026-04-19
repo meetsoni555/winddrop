@@ -2,41 +2,144 @@
 
 set -e
 
-echo "🌬️ Installing WindDrop..."
+echo " ██▓ ███▄    █   ██████ ▄▄▄█████▓ ▄▄▄       ██▓     ██▓     ██▓ ███▄    █   ▄████ "
+echo "▓██▒ ██ ▀█   █ ▒██    ▒ ▓  ██▒ ▓▒▒████▄    ▓██▒    ▓██▒    ▓██▒ ██ ▀█   █  ██▒ ▀█▒"
+echo "▒██▒▓██  ▀█ ██▒░ ▓██▄   ▒ ▓██░ ▒░▒██  ▀█▄  ▒██░    ▒██░    ▒██▒▓██  ▀█ ██▒▒██░▄▄▄░"
+echo "░██░▓██▒  ▐▌██▒  ▒   ██▒░ ▓██▓ ░ ░██▄▄▄▄██ ▒██░    ▒██░    ░██░▓██▒  ▐▌██▒░▓█  ██▓"
+echo "░██░▒██░   ▓██░▒██████▒▒  ▒██▒ ░  ▓█   ▓██▒░██████▒░██████▒░██░▒██░   ▓██░░▒▓███▀▒"
+echo "░▓  ░ ▒░   ▒ ▒ ▒ ▒▓▒ ▒ ░  ▒ ░░    ▒▒   ▓▒█░░ ▒░▓  ░░ ▒░▓  ░░▓  ░ ▒░   ▒ ▒  ░▒   ▒ "
+echo " ▒ ░░ ░░   ░ ▒░░ ░▒  ░ ░    ░      ▒   ▒▒ ░░ ░ ▒  ░░ ░ ▒  ░ ▒ ░░ ░░   ░ ▒░  ░   ░ "
+echo " ▒ ░   ░   ░ ░ ░  ░  ░    ░        ░   ▒     ░ ░     ░ ░    ▒ ░   ░   ░ ░ ░ ░   ░ "
+echo " ░           ░       ░                 ░  ░    ░  ░    ░  ░ ░           ░       ░ "
 
-echo "installing cloudflared"
+
+echo ""
+
+
+echo "▄▖    ▗   ▜ ▜ ▘        ▜      ▌▐▘▜        ▌"
+echo "▐ ▛▌▛▘▜▘▀▌▐ ▐ ▌▛▌▛▌  ▛▘▐ ▛▌▌▌▛▌▜▘▐ ▀▌▛▘█▌▛▌"
+echo "▟▖▌▌▄▌▐▖█▌▐▖▐▖▌▌▌▙▌  ▙▖▐▖▙▌▙▌▙▌▐ ▐▖█▌▌ ▙▖▙▌"
+echo "                 ▄▌                        "
+echo "-------------------------------------------"
+echo ""
+
+
 sudo pacman -S cloudflared --needed &> /dev/null
 
-echo"Insatlled Successfully ..."
-# Step 1: Build binary
-echo "🔨 Building binary..."
+
+
+
+echo "▄   ▘▜  ▌▘      ▌ ▘        "
+echo "▙▘▌▌▌▐ ▛▌▌▛▌▛▌  ▛▌▌▛▌▀▌▛▘▌▌"
+echo "▙▘▙▌▌▐▖▙▌▌▌▌▙▌  ▙▌▌▌▌█▌▌ ▙▌"
+echo "            ▄▌           ▄▌"
+echo "---------------------------"
+echo ""
+
 go build -o winddrop
-echo " "
-
-echo "Binary Built Successfully .. "
 
 
-# Step 2: Make executable
+echo ""
+
+echo "▄ ▘          ▌   ▘▜ ▗   ▌▌"
+echo "▙▘▌▛▌▀▌▛▘▌▌  ▛▌▌▌▌▐ ▜▘  ▌▌"
+echo "▙▘▌▌▌█▌▌ ▙▌  ▙▌▙▌▌▐▖▐▖  ▖▖"
+echo "         ▄▌               "
+echo "--------------------------"
+echo ""
+
+
 chmod +x winddrop
 
-# Step 3: Install to /usr/local/bin
-echo "📦 Installing to /usr/local/bin..."
+
+echo " Installing to /usr/local/bin..."
+
+
+
+echo "▘    ▗   ▜ ▜ ▘      ▗            ▌▜       ▜  ▌▌ ▘        "
+echo "▌▛▌▛▘▜▘▀▌▐ ▐ ▌▛▌▛▌  ▜▘▛▌  ▌▌▛▘▛▘▐ ▐ ▛▌▛▘▀▌▐ ▐ ▛▌▌▛▌      "
+echo "▌▌▌▄▌▐▖█▌▐▖▐▖▌▌▌▙▌  ▐▖▙▌  ▙▌▄▌▌ ▞ ▐▖▙▌▙▖█▌▐▖▞ ▙▌▌▌▌▗ ▗ ▗ "
+echo "                ▄▌              ▘           ▘            "
+echo "---------------------------------------------------------"
+echo ""
+
+
+
 sudo cp winddrop /usr/local/bin/
 
-# Step 4: Verify install
 if command -v winddrop &> /dev/null
 then
-    echo "✅ WindDrop installed successfully!"
+	echo "▄▖    ▗   ▜ ▜    ▌  ▄▖            ▐▘  ▜ ▜     ▌▌       "
+    echo "▐ ▛▌▛▘▜▘▀▌▐ ▐ █▌▛▌  ▚ ▌▌▛▘▛▘█▌▛▘▛▘▜▘▌▌▐ ▐ ▌▌  ▌▌       "
+    echo "▟▖▌▌▄▌▐▖█▌▐▖▐▖▙▖▙▌  ▄▌▙▌▙▖▙▖▙▖▄▌▄▌▐ ▙▌▐▖▐▖▙▌  ▖▖ ▗ ▗ ▗ "
+    echo "                                          ▄▌           "
+    echo "▄▖▗     ▗       ▘      ▌     ▗     ▘            "
+    echo "▚ ▜▘▀▌▛▘▜▘  ▌▌▛▘▌▛▌▛▌  ▛▌▌▌  ▜▘▌▌▛▌▌▛▌▛▌        "
+    echo "▄▌▐▖█▌▌ ▐▖  ▙▌▄▌▌▌▌▙▌  ▙▌▙▌  ▐▖▙▌▙▌▌▌▌▙▌  ▗ ▗ ▗ "
+    echo "                   ▄▌    ▄▌    ▄▌▌    ▄▌        "
+    echo "------------------------------------------------"
     echo ""
-    echo "👉 Try:"
-    echo "   winddrop send <file>"
-    echo "   winddrop send <file> --expire 5m"
-    echo "   winddrop send <file> --once expire 2m"
-    echo "   winddrop send <file> --public"
-    echo "   winddrop send <folder> --public"
-    echo " 	 using the --public flag makes a network link using which a file can be sent to anyone ."
     echo ""
-	echo "   enjoy your DEBLOAT FROM GOOGLE DRIVE !! :)"
+    echo ""    
+	echo "------------------------------------------------------------"
+    echo "|   winddrop send <file>									  |"
+    echo "|   winddrop send <file> --expire 5m						  |"
+    echo "|   winddrop send <file> --once expire 2m					  |"
+    echo "|   winddrop send <file> --public							  | "
+    echo "|   winddrop send <folder> --public 						  |-------------------------------"
+    echo "|   using the --public flag makes a network link using which a file can be sent to anyone .|"
+    echo "|-------------------------------------------------------------------------------------------"
+    echo ""
+	echo ""	
+	echo "     ▘                 ▌  ▌ ▜     ▗   ▐▘           "
+	echo "█▌▛▌ ▌▛▌▌▌  ▌▌▛▌▌▌▛▘  ▛▌█▌▛▌▐ ▛▌▀▌▜▘  ▜▘▛▘▛▌▛▛▌    "
+	echo "▙▖▌▌ ▌▙▌▙▌  ▙▌▙▌▙▌▌   ▙▌▙▖▙▌▐▖▙▌█▌▐▖  ▐ ▌ ▙▌▌▌▌▗ ▗ "
+	echo "    ▙▌  ▄▌  ▄▌                                     "
+	echo ""
+	echo " ▄▄ •              ▄▄ • ▄▄▌  ▄▄▄ .    ·▄▄▄▄  ▄▄▄  ▪   ▌ ▐·▄▄▄ .         "
+	echo "▐█ ▀ ▪▪     ▪     ▐█ ▀ ▪██•  ▀▄.▀·    ██▪ ██ ▀▄ █·██ ▪█·█▌▀▄.▀·         "
+	echo "▄█ ▀█▄ ▄█▀▄  ▄█▀▄ ▄█ ▀█▄██▪  ▐▀▀▪▄    ▐█· ▐█▌▐▀▀▄ ▐█·▐█▐█•▐▀▀▪▄         "
+	echo "▐█▄▪▐█▐█▌.▐▌▐█▌.▐▌▐█▄▪▐█▐█▌▐▌▐█▄▄▌    ██. ██ ▐█•█▌▐█▌ ███ ▐█▄▄▌         "
+	echo "▐█▄▪▐█▐█▌.▐▌▐█▌.▐▌▐█▄▪▐█▐█▌▐▌▐█▄▄▌    ██. ██ ▐█•█▌▐█▌ ███ ▐█▄▄▌         "
+	echo "·▀▀▀▀  ▀█▄▀▪ ▀█▄▀▪·▀▀▀▀ .▀▀▀  ▀▀▀     ▀▀▀▀▀• .▀  ▀▀▀▀. ▀   ▀▀▀  ▀  ▀  ▀ "
+
+
+	echo "⣇⣿⠘⣿⣿⣿⡿⡿⣟⣟⢟⢟⢝⠵⡝⣿⡿⢂⣼⣿⣷⣌⠩⡫⡻⣝⠹⢿⣿⣷"
+	echo "⡆⣿⣆⠱⣝⡵⣝⢅⠙⣿⢕⢕⢕⢕⢝⣥⢒⠅⣿⣿⣿⡿⣳⣌⠪⡪⣡⢑⢝⣇"
+	echo "⡆⣿⣿⣦⠹⣳⣳⣕⢅⠈⢗⢕⢕⢕⢕⢕⢈⢆⠟⠋⠉⠁⠉⠉⠁⠈⠼⢐⢕⢽"
+	echo "⡗⢰⣶⣶⣦⣝⢝⢕⢕⠅⡆⢕⢕⢕⢕⢕⣴⠏⣠⡶⠛⡉⡉⡛⢶⣦⡀⠐⣕⢕"
+	echo "⡝⡄⢻⢟⣿⣿⣷⣕⣕⣅⣿⣔⣕⣵⣵⣿⣿⢠⣿⢠⣮⡈⣌⠨⠅⠹⣷⡀⢱⢕"
+	echo "⡝⡵⠟⠈⢀⣀⣀⡀⠉⢿⣿⣿⣿⣿⣿⣿⣿⣼⣿⢈⡋⠴⢿⡟⣡⡇⣿⡇⡀⢕"
+	echo "⡝⠁⣠⣾⠟⡉⡉⡉⠻⣦⣻⣿⣿⣿⣿⣿⣿⣿⣿⣧⠸⣿⣦⣥⣿⡇⡿⣰⢗⢄"
+	echo "⠁⢰⣿⡏⣴⣌⠈⣌⠡⠈⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣬⣉⣉⣁⣄⢖⢕⢕⢕"
+	echo "⡀⢻⣿⡇⢙⠁⠴⢿⡟⣡⡆⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣵⣵⣿"
+	echo "⡻⣄⣻⣿⣌⠘⢿⣷⣥⣿⠇⣿⣿⣿⣿⣿⣿⠛⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿"
+	echo "⣷⢄⠻⣿⣟⠿⠦⠍⠉⣡⣾⣿⣿⣿⣿⣿⣿⢸⣿⣦⠙⣿⣿⣿⣿⣿⣿⣿⣿⠟"
+	echo "⡕⡑⣑⣈⣻⢗⢟⢞⢝⣻⣿⣿⣿⣿⣿⣿⣿⠸⣿⠿⠃⣿⣿⣿⣿⣿⣿⡿⠁⣠"
+	echo "⡝⡵⡈⢟⢕⢕⢕⢕⣵⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣶⣿⣿⣿⣿⣿⠿⠋⣀⣈⠙"
+	echo "⡝⡵⡕⡀⠑⠳⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠛⢉⡠⡲⡫⡪⡪⡣"
+	echo ""
+	echo ""
+	echo "       d8888         d8b                   888            "
+	echo "      d88888         Y8P                   888            "
+	echo "     d88P888                               888            "
+	echo "    d88P 888 888d888 888  .d88b.   8888b.  888888 .d88b.  "
+	echo "   d88P  888 888P    888 d88P 88b     88b 888    d88  88b "
+	echo "  d88P   888 888     888 888  888 .d888888 888   888  888 "
+	echo " d8888888888 888     888 Y88b 888 888  888 Y88b. Y88..88P "
+	echo "d88P     888 888     888   Y88888  Y888888  Y888   Y88P   "
+	echo "                              888                         "
+	echo "                         Y8b d88P                         "
+	echo "                           Y88P                           "
+	echo ""
+	echo ""
+	echo "Feedback at meet10112009@gmail.com"
+
+
+
+
+
+	
 else
     echo "❌ Installation failed. Check PATH."
 fi
