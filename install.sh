@@ -13,7 +13,7 @@ echo "🔨 Building binary..."
 go build -o winddrop
 echo " "
 
-echo "Binary Built Successfully ... "
+echo "Binary Built Successfully .. "
 
 
 # Step 2: Make executable
