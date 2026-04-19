@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"mime"
 	"net/http"
+	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
@@ -22,7 +23,7 @@ func generateToken() string {
 	return hex.EncodeToString(bytes)
 }
 
-// 🌍 Cloudflare tunnel
+
 func startCloudflareTunnel() (string, *exec.Cmd) {
 	cmd := exec.Command("cloudflared", "tunnel", "--url", "http://localhost:8080")
 
@@ -31,7 +32,7 @@ func startCloudflareTunnel() (string, *exec.Cmd) {
 
 	err := cmd.Start()
 	if err != nil {
-		fmt.Println("❌ Failed to start cloudflared. Is it installed?")
+		fmt.Println("❌ Failed to start cloudflared. Is it installed?, if not then run the installer script again .")
 		return "", nil
 	}
 
@@ -58,11 +59,15 @@ func startCloudflareTunnel() (string, *exec.Cmd) {
 	return publicURL, cmd
 }
 
-func StartServer(filePath string, expiryDuration time.Duration, once bool, public bool) {
+func StartServer(filePath string, expiryDuration time.Duration, once bool, public bool, isTempArchive bool, totalItems int) {
 	port := "8080"
 
 	token := generateToken()
+
 	fileName := filepath.Base(filePath)
+	if isTempArchive {
+		fileName = "winddrop_files.zip"
+	}
 
 	var expiryTime time.Time
 	hasExpiry := expiryDuration > 0
@@ -80,7 +85,7 @@ func StartServer(filePath string, expiryDuration time.Duration, once bool, publi
 		Handler: mux,
 	}
 
-	// ⏳ expiry countdown
+
 	if hasExpiry {
 		go func() {
 			for {
@@ -98,29 +103,29 @@ func StartServer(filePath string, expiryDuration time.Duration, once bool, publi
 		}()
 	}
 
-	// 📥 download handler
+
 	mux.HandleFunc("/download", func(w http.ResponseWriter, r *http.Request) {
 
-		// 🔐 token check
+
 		queryToken := r.URL.Query().Get("token")
 		if queryToken != token {
 			http.Error(w, "❌ Unauthorized", http.StatusUnauthorized)
 			return
 		}
 
-		// ⏳ expiry check
+
 		if hasExpiry && time.Now().After(expiryTime) {
 			http.Error(w, "❌ Link expired", http.StatusGone)
 			return
 		}
 
-		// 🔥 one-time check
+	
 		if once && downloaded {
 			http.Error(w, "❌ Already downloaded", http.StatusGone)
 			return
 		}
 
-		// 📦 detect MIME properly
+	
 		mimeType := mime.TypeByExtension(filepath.Ext(fileName))
 		if mimeType == "" {
 			mimeType = "application/octet-stream"
@@ -129,12 +134,12 @@ func StartServer(filePath string, expiryDuration time.Duration, once bool, publi
 		w.Header().Set("Content-Disposition", fmt.Sprintf("attachment; filename=\"%s\"", fileName))
 		w.Header().Set("Content-Type", mimeType)
 
-		// mark downloaded
+	
 		if once {
 			downloaded = true
 		}
 
-		// shutdown if once
+
 		if once {
 			go func() {
 				time.Sleep(2 * time.Second)
@@ -160,15 +165,22 @@ func StartServer(filePath string, expiryDuration time.Duration, once bool, publi
 		}
 	}
 
-	// 🎨 output
+
 	fmt.Println("\n🌬️ WindDrop\n")
 
-	fmt.Printf("File      : %s\n", fileName)
+	if isTempArchive {
+		fmt.Println("Mode      : Multi-file")
+		fmt.Printf("Items     : %d\n", totalItems)
+		fmt.Printf("Archive   : %s\n", fileName)
+	} else {
+		fmt.Printf("File      : %s\n", fileName)
+	}
+
 	fmt.Println("Token     : enabled")
 
 	if once {
 		fmt.Println("Mode      : one-time")
-	} else {
+	} else if !isTempArchive {
 		fmt.Println("Mode      : normal")
 	}
 
@@ -184,7 +196,7 @@ func StartServer(filePath string, expiryDuration time.Duration, once bool, publi
 
 	fmt.Println()
 
-	// links
+
 	fmt.Printf("Local Link  : http://%s:%s/download?token=%s\n", ip, port, token)
 
 	if public && publicURL != "" {
@@ -195,9 +207,15 @@ func StartServer(filePath string, expiryDuration time.Duration, once bool, publi
 
 	err := server.ListenAndServe()
 
-	// cleanup tunnel
+
 	if tunnelCmd != nil && tunnelCmd.Process != nil {
 		tunnelCmd.Process.Kill()
+	}
+
+
+	if isTempArchive {
+		fmt.Println("🧹 Cleaning up temporary archive...")
+		os.Remove(filePath)
 	}
 
 	if err != nil && err != http.ErrServerClosed {

@@ -5,6 +5,7 @@ import (
 	"os"
 	"time"
 
+	"winddrop/internal/file"
 	"winddrop/internal/server"
 )
 
@@ -12,7 +13,7 @@ func Execute() {
 	if len(os.Args) < 2 {
 		fmt.Println("WindDrop CLI")
 		fmt.Println("Usage:")
-		fmt.Println("  winddrop send <file> [--expire 5m] [--once] [--public]")
+		fmt.Println("  winddrop send <files...> [--expire 5m] [--once] [--public]")
 		return
 	}
 
@@ -22,24 +23,22 @@ func Execute() {
 
 	case "send":
 		if len(os.Args) < 3 {
-			fmt.Println("Please provide a file to send")
+			fmt.Println("Please provide files or folders to send")
 			return
 		}
 
-		file := os.Args[2]
-
-		if _, err := os.Stat(file); os.IsNotExist(err) {
-			fmt.Println("❌ File does not exist:", file)
-			return
-		}
-
+		var inputs []string
 		var expiry time.Duration = 0
 		once := false
 		public := false
 
-		for i := 3; i < len(os.Args); i++ {
+		// 🔥 Parse inputs + flags
+		for i := 2; i < len(os.Args); i++ {
 
-			if os.Args[i] == "--expire" && i+1 < len(os.Args) {
+			arg := os.Args[i]
+
+			// FLAGS
+			if arg == "--expire" && i+1 < len(os.Args) {
 				dur, err := time.ParseDuration(os.Args[i+1])
 				if err != nil {
 					fmt.Println("❌ Invalid duration")
@@ -47,20 +46,81 @@ func Execute() {
 				}
 				expiry = dur
 				i++
+				continue
 			}
 
-			if os.Args[i] == "--once" {
+			if arg == "--once" {
 				once = true
+				continue
 			}
 
-			if os.Args[i] == "--public" {
+			if arg == "--public" {
 				public = true
+				continue
 			}
+
+			// FILE / FOLDER
+			info, err := os.Stat(arg)
+			if os.IsNotExist(err) {
+				fmt.Println("❌ Path does not exist:", arg)
+				return
+			}
+
+			inputs = append(inputs, arg)
+
+			_ = info // just to avoid unused warning if needed
 		}
 
-		fmt.Println("Starting WindDrop server for:", file)
+		if len(inputs) == 0 {
+			fmt.Println("❌ No valid files/folders provided")
+			return
+		}
 
-		server.StartServer(file, expiry, once, public)
+		var fileToSend string
+		isTempArchive := false
+
+		// 🔥 IMPORTANT FIX: handle folder correctly
+		if len(inputs) == 1 {
+			info, err := os.Stat(inputs[0])
+			if err != nil {
+				fmt.Println("❌ Failed to read input:", err)
+				return
+			}
+
+			if info.IsDir() {
+				// single folder → archive
+				fmt.Println("📦 Creating archive...")
+
+				archivePath, err := file.CreateArchive(inputs)
+				if err != nil {
+					fmt.Println("❌ Failed to create archive:", err)
+					return
+				}
+
+				fileToSend = archivePath
+				isTempArchive = true
+			} else {
+				// single file → direct send
+				fileToSend = inputs[0]
+			}
+
+		} else {
+			// multiple inputs → archive
+			fmt.Println("📦 Creating archive...")
+
+			archivePath, err := file.CreateArchive(inputs)
+			if err != nil {
+				fmt.Println("❌ Failed to create archive:", err)
+				return
+			}
+
+			fileToSend = archivePath
+			isTempArchive = true
+		}
+
+		fmt.Println("Starting WindDrop server...")
+
+		server.StartServer(fileToSend, expiry, once, public, isTempArchive, len(inputs))
 
 	default:
 		fmt.Println("Unknown command:", command)
