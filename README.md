@@ -21,7 +21,7 @@ WindDrop is a lightweight CLI tool to share files instantly.
 
 ---
 
-## 🚀 Installation
+##  Installation
 
 ```bash
 git clone https://github.com/meetsoni555/winddrop.git
@@ -32,9 +32,9 @@ chmod +x install.sh
 
 ---
 
-## 🛠️ Usage
+##  Usage
 
-### 📤 Share a file (local network)
+###  Share a file (local network)
 
 ```bash
 winddrop send file.zip
@@ -42,7 +42,7 @@ winddrop send file.zip
 
 ---
 
-### 🌍 Share publicly (internet)
+###  Share publicly (internet)
 
 ```bash
 winddrop send file.zip --public
@@ -50,7 +50,7 @@ winddrop send file.zip --public
 
 ---
 
-### ⏳ Share with expiry
+###  Share with expiry
 
 ```bash
 winddrop send file.zip --expire 5m (locally)
@@ -58,7 +58,7 @@ winddrop send file.zip --expire 5m (locally)
 
 ---
 
-### 🔥 One-time download
+###  One-time download
 
 ```bash
 winddrop send file.zip --once     (locally)
@@ -66,7 +66,7 @@ winddrop send file.zip --once     (locally)
 
 ---
 
-### 💀 Combined
+###  Combined
 
 ```bash
 winddrop send file.zip --public --once --expire 2m  (underdevelopment)
@@ -74,7 +74,7 @@ winddrop send file.zip --public --once --expire 2m  (underdevelopment)
 
 ---
 
-## 🌐 How it works
+##  How it works
 
 ```text
 You run command → WindDrop starts server
@@ -85,10 +85,10 @@ You run command → WindDrop starts server
 
 ---
 
-## 📌 Example Output
+##  Example Output
 
 ```text
-🌬️ WindDrop
+ WindDrop
 
 File      : file.zip
 Mode      : one-time
@@ -100,19 +100,14 @@ Public Link : https://xyz.trycloudflare.com/download?token=abc123
 
 ---
 
-## 📡 Requirements
+##  Requirements
 
 * Same WiFi for local sharing
 * Internet required for `--public`
 
 ---
 
-## 🚧 Status
+##  Status
 
 Active development 🚀
 
----
-
-## 📄 License
-
-MIT
