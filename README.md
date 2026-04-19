@@ -45,7 +45,7 @@ winddrop send file.zip
 ###  Share publicly (internet)
 
 ```bash
-winddrop send file.zip --public
+winddrop send file.zip --public (on network so you can send to anyone ) 
 ```
 
 ---
