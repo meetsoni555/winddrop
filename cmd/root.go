@@ -89,7 +89,7 @@ func Execute() {
 
 			if info.IsDir() {
 				// single folder → archive
-				fmt.Println("📦 Creating archive...")
+				fmt.Println(" Creating archive...")
 
 				archivePath, err := file.CreateArchive(inputs)
 				if err != nil {
