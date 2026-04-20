@@ -11,9 +11,9 @@ import (
 
 func Execute() {
 	if len(os.Args) < 2 {
-		fmt.Println("Winddrop CLI")
-		fmt.Println("usage:")
-		fmt.Println("  winddrop send <folder/files..> [--expire 5m] [--once] [--public]")
+		fmt.Println("WindDrop CLI")
+		fmt.Println("Usage:")
+		fmt.Println("  winddrop send <files...> [--expire 5m] [--once]")
 		return
 	}
 
@@ -28,9 +28,8 @@ func Execute() {
 		}
 
 		var inputs []string
-		var expiry time.Duration = 0
+		var expiry time.Duration
 		once := false
-		public := false
 
 		for i := 2; i < len(os.Args); i++ {
 
@@ -52,23 +51,16 @@ func Execute() {
 				continue
 			}
 
-			if arg == "--public" {
-				public = true
-				continue
-			}
-
-			info, err := os.Stat(arg)
-			if os.IsNotExist(err) {
+			if _, err := os.Stat(arg); os.IsNotExist(err) {
 				fmt.Println("Path does not exist:", arg)
 				return
 			}
 
 			inputs = append(inputs, arg)
-			_ = info
 		}
 
 		if len(inputs) == 0 {
-			fmt.Println("No valid files/folders provided")
+			fmt.Println("No valid files provided")
 			return
 		}
 
@@ -76,43 +68,31 @@ func Execute() {
 		isTempArchive := false
 
 		if len(inputs) == 1 {
-			info, err := os.Stat(inputs[0])
-			if err != nil {
-				fmt.Println("Failed to read input:", err)
-				return
-			}
-
+			info, _ := os.Stat(inputs[0])
 			if info.IsDir() {
 				fmt.Println("Creating archive...")
-
 				archivePath, err := file.CreateArchive(inputs)
 				if err != nil {
-					fmt.Println("Failed to create archive:", err)
+					fmt.Println("Archive failed:", err)
 					return
 				}
-
 				fileToSend = archivePath
 				isTempArchive = true
 			} else {
 				fileToSend = inputs[0]
 			}
-
 		} else {
 			fmt.Println("Creating archive...")
-
 			archivePath, err := file.CreateArchive(inputs)
 			if err != nil {
-				fmt.Println("Failed to create archive:", err)
+				fmt.Println("Archive failed:", err)
 				return
 			}
-
 			fileToSend = archivePath
 			isTempArchive = true
 		}
 
-		fmt.Println("Starting WindDrop server...")
-
-		server.StartServer(fileToSend, expiry, once, public, isTempArchive, len(inputs))
+		server.StartServer(fileToSend, expiry, once, isTempArchive, len(inputs))
 
 	default:
 		fmt.Println("Unknown command:", command)
