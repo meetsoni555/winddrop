@@ -9,7 +9,7 @@ import (
 	"winddrop/internal/server"
 )
 
-func Execute(
+func Execute() {
 	if len(os.Args) < 2 {
 		fmt.Println("Winddrop CLI")
 		fmt.Println("usage: ")
@@ -33,12 +33,12 @@ func Execute(
 		once := false
 		public := false
 
-		// 🔥 Parse inputs + flags
+		
 		for i := 2; i < len(os.Args); i++ {
 
 			arg := os.Args[i]
 
-			// FLAGS
+		
 			if arg == "--expire" && i+1 < len(os.Args) {
 				dur, err := time.ParseDuration(os.Args[i+1])
 				if err != nil {
@@ -60,7 +60,7 @@ func Execute(
 				continue
 			}
 
-			// FILE / FOLDER
+		
 			info, err := os.Stat(arg)
 			if os.IsNotExist(err) {
 				fmt.Println("❌ Path does not exist:", arg)
@@ -69,7 +69,7 @@ func Execute(
 
 			inputs = append(inputs, arg)
 
-			_ = info // just to avoid unused warning if needed
+			_ = info
 		}
 
 		if len(inputs) == 0 {
@@ -80,7 +80,6 @@ func Execute(
 		var fileToSend string
 		isTempArchive := false
 
-		// 🔥 IMPORTANT FIX: handle folder correctly
 		if len(inputs) == 1 {
 			info, err := os.Stat(inputs[0])
 			if err != nil {
@@ -89,7 +88,6 @@ func Execute(
 			}
 
 			if info.IsDir() {
-				// single folder → archive
 				fmt.Println(" Creating archive...")
 
 				archivePath, err := file.CreateArchive(inputs)
@@ -101,13 +99,11 @@ func Execute(
 				fileToSend = archivePath
 				isTempArchive = true
 			} else {
-				// single file → direct send
 				fileToSend = inputs[0]
 			}
 
 		} else {
-			// multiple inputs → archive
-			fmt.Println("📦 Creating archive...")
+			fmt.Println(" Creating archive...")
 
 			archivePath, err := file.CreateArchive(inputs)
 			if err != nil {
