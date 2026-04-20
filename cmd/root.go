@@ -9,11 +9,12 @@ import (
 	"winddrop/internal/server"
 )
 
-func Execute() {
+func Execute(
 	if len(os.Args) < 2 {
-		fmt.Println("WindDrop CLI")
-		fmt.Println("Usage:")
-		fmt.Println("  winddrop send <files...> [--expire 5m] [--once] [--public]")
+		fmt.Println("Winddrop CLI")
+		fmt.Println("usage: ")
+		fmt.Println("  winddrop send <folder..> [--expire 5m] [--once] [--public]")
+
 		return
 	}
 
