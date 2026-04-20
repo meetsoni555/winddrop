@@ -38,7 +38,11 @@ func Execute() {
 
 			arg := os.Args[i]
 
+<<<<<<< HEAD
 		
+=======
+			
+>>>>>>> b3575c995d2c58ca8ea7b7ba8262000b904b52d3
 			if arg == "--expire" && i+1 < len(os.Args) {
 				dur, err := time.ParseDuration(os.Args[i+1])
 				if err != nil {
@@ -60,7 +64,11 @@ func Execute() {
 				continue
 			}
 
+<<<<<<< HEAD
 		
+=======
+			
+>>>>>>> b3575c995d2c58ca8ea7b7ba8262000b904b52d3
 			info, err := os.Stat(arg)
 			if os.IsNotExist(err) {
 				fmt.Println("❌ Path does not exist:", arg)
@@ -80,6 +88,10 @@ func Execute() {
 		var fileToSend string
 		isTempArchive := false
 
+<<<<<<< HEAD
+=======
+	
+>>>>>>> b3575c995d2c58ca8ea7b7ba8262000b904b52d3
 		if len(inputs) == 1 {
 			info, err := os.Stat(inputs[0])
 			if err != nil {
@@ -120,6 +132,6 @@ func Execute() {
 		server.StartServer(fileToSend, expiry, once, public, isTempArchive, len(inputs))
 
 	default:
-		fmt.Println("Unknown command:", command)
+		fmt.Println("Unknown command: try again", command)
 	}
 }
